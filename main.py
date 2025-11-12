@@ -14,10 +14,10 @@ def main():
         dashboard.metal_city_rates()
 
     elif sidebar_button == "Stock Prices":
-        page = StocksPage()
-        page.stocks()
-        if page.symbol:  # Check if a stock is selected
-            page.stocks_data_display()
+        sp = StocksPage()
+        sp.stocks_table_display()
+        if sp.stocks_selectbox():
+            sp.stocks_graph_display()
 
 if __name__ == "__main__":
     main()
