@@ -9,6 +9,7 @@ class GetPrices:
         self.currencies = "XAU,XAG"
         self.base_url = "https://api.metalpriceapi.com/v1/latest?"
     
+    # Function to fetch the gold and silver price.
     def get_metal_price(_self):
         url = f"{_self.base_url}api_key={_self.api_key}&base={_self.base}&currencies={_self.currencies}"
 
@@ -16,13 +17,14 @@ class GetPrices:
             response = requests.get(url)
 
             if response.status_code == 200 and response.json()['success'] == True:
-                gold_price = (response.json()['rates']["INRXAU"])/troy_ounce
-                silver_price = (response.json()['rates']['INRXAG'])/troy_ounce
+                gold_price = (response.json()['rates']["INRXAU"])/float(troy_ounce)
+                silver_price = (response.json()['rates']['INRXAG'])/float(troy_ounce)
                 return gold_price, silver_price
 
         except requests.exceptions.RequestException as e:
             print("Error:",str(e))
 
+    # Function to fetch the USD rate.
     @staticmethod
     def get_usd_rate():
 
