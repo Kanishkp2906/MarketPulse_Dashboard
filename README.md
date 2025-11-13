@@ -1,5 +1,7 @@
 # MarketPulse Dashboard
 
+**Live Website**: [MarketPulse Dashboard](https://marketpulsedashboard-121125.streamlit.app)
+
 ## Overview
 MarketPulse Dashboard is a Streamlit-based web application designed to provide real-time insights into Indian stock prices, gold and silver rates, and currency exchange rates. The app integrates multiple APIs and web scraping techniques to fetch and display data interactively.
 
