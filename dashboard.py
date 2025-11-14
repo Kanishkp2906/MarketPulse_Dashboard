@@ -23,7 +23,7 @@ class Dashboard:
         self.gold_price = gold_price
         self.silver_price = silver_price
         self.usd_rate = usd_rate
-        self.col1, self.col2, self.col3 = st.columns([1,1,1])
+        self.col1, self.col2, self.col3 = st.columns([1,1,1], vertical_alignment="center")
 
     # Function to display the gold price.
     def gold_price_display(self):
