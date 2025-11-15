@@ -1,7 +1,6 @@
 import streamlit as st
-from stocks_tables import stock_symbols
-from database import db_bse_dataframe, db_nse_dataframe
-from stocks_data import get_graph_dataframe
+from stocks_list import bse_list
+from get_dataframe import bse_dataframe, nse_dataframe, get_graph_dataframe
 
 class StocksPage:
 
@@ -18,14 +17,15 @@ class StocksPage:
         with self.col2:
             st.title("Stock Prices")
         self.subheader = st.caption("Top BSE and NSE Stocks just at one glance.")
-        self.symbols = stock_symbols
+        self.symbols = bse_list
 
+    # Function to display the stocks table.
     def stocks_table_display(self):
         st.write("")
         st.write("")
 
         self.heading = st.markdown("### BSE Most Active Stocks")
-        self.bse_table = db_bse_dataframe
+        self.bse_table = bse_dataframe
         self.bse_table.index = self.bse_table.index + 1
         st.dataframe(self.bse_table)
 
@@ -33,30 +33,31 @@ class StocksPage:
         st.write("")
 
         self.heading = st.markdown("### NSE Most Active Stocks")
-        self.nse_table = db_nse_dataframe
+        self.nse_table = nse_dataframe
         self.nse_table.index = self.nse_table.index + 1
         st.dataframe(self.nse_table)
 
         st.write("")
         st.write("")
 
+    # Function to display the stock selectbox.
     def stocks_selectbox(self):
         st.write("")
         st.write("")
+        col1, col2 = st.columns([1,1])
 
-        st.markdown("### BSE Stocks last Month Prices")
+        st.markdown("### BSE Stocks Volume History")
         self.symbol = st.selectbox("Choose a stock", self.symbols)
         return self.symbol
 
     def stocks_graph_display(self):
         st.write("")
         st.write("")
+        volume_df = get_graph_dataframe(self.symbol)
 
-        st.markdown(f'### Last Month Prices for {self.symbol}')
-        graph_df = get_graph_dataframe(self.symbol)
-
-        if not graph_df.empty:
-            st.line_chart(graph_df)
+        st.markdown(f'### Volumes for {self.symbol}')
+        if not volume_df.empty:
+            st.line_chart(volume_df)
         else:
             st.error("No data available for the selected stock.")
 

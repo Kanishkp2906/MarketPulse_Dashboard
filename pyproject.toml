@@ -6,9 +6,11 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "babel>=2.17.0",
+    "beautifulsoup4>=4.14.2",
     "dotenv>=0.9.9",
     "lxml>=6.0.2",
     "pandas>=2.3.3",
+    "pymongo>=4.15.4",
     "streamlit>=1.51.0",
     "streamlit-tags>=1.2.8",
 ]

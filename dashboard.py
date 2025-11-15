@@ -1,6 +1,6 @@
 import streamlit as st
 from database import gold_price, silver_price, usd_rate
-from dashboard_tables import gold_table, silver_table, INR_Table
+from dashboard_tables import gold_table, silver_table, INR_table
 from babel.numbers import format_currency
 
 class Dashboard:
@@ -64,18 +64,17 @@ class Dashboard:
         st.write("")
 
         with st.container():
-            st.subheader("Indian Major Cities Gold Rates Today (1 gram)")
+            st.subheader("Historical Gold Rate in India")
             st.dataframe(gold_table)
 
             st.write("")
             st.write("")
 
-            st.subheader('Indian Major Cities Silver Rates Today')
+            st.subheader('Historical Silver Rate in India')
             st.dataframe(silver_table)
 
             st.write("")
             st.write("")
 
             st.subheader("Indian Rupee Exchange Rates Table")
-            st.dataframe(INR_Table)
-
+            st.dataframe(INR_table)

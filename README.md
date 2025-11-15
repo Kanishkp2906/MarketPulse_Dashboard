@@ -23,6 +23,7 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
 - **Babel**: For formatting currency values.
 - **Web Scraping**: Using `pandas.read_html()` to extract gold, silver, and exchange rate tables.
 - **SQLite**: For storing fetched data to minimize API calls.
+- **MongoDB**: For storing and retrieving stock data.
 
 ## APIs Used
 - **MetalPriceAPI**: For fetching gold and silver prices.
@@ -32,13 +33,15 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
 ## Project Structure
 - **`main.py`**: Entry point of the application. Handles navigation between the dashboard and stock prices pages.
 - **`dashboard.py`**: Displays gold, silver, and currency rates along with interactive tables.
-- **`stocks_page.py`**: Displays BSE and NSE stock data and historical price graphs.
-- **`database.py`**: Handles SQLite database operations for storing and retrieving data.
+- **`stocks_page.py`**: Displays BSE and NSE stock data and historical volume graphs.
+- **`database.py`**: Handles SQLite database operations for storing and retrieving metal prices and currency rates.
 - **`currencies.py`**: Fetches gold, silver, and USD rates using APIs.
-- **`stocks_data.py`**: Fetches stock data and historical price data using APIs.
+- **`stocks_data.py`**: Fetches stock data and historical volume data using APIs.
 - **`dashboard_tables.py`**: Scrapes gold, silver, and currency rate tables from websites.
-- **`stocks_tables.py`**: Contains predefined stock symbols for user selection.
-- **`config.py`**: Loads environment variables for API keys.
+- **`stocks_list.py`**: Generates a list of stock symbols for user selection.
+- **`get_dataframe.py`**: Processes and normalizes stock data into Pandas DataFrames.
+- **`mongo_db.py`**: Handles MongoDB operations for storing and retrieving stock data.
+- **`config.py`**: Loads environment variables for API keys and MongoDB URI.
 
 ## Installation
 1. Clone the repository:
@@ -64,14 +67,15 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
    ```
 ## How It Works
 1. **Dashboard**:
-   - Scrapes gold and silver rates from `goodreturns.in`.
+   - Scrapes gold and silver rates from `bankbazaar.com`.
    - Scrapes currency exchange rates from `x-rates.com`.
    - Displays the data in interactive tables using Streamlit.
 
 2. **Stock Prices**:
    - Fetches the most active BSE and NSE stocks using RapidAPI.
-   - Displays historical price data for selected stocks using line charts.
+   - Displays historical volume data for selected stocks using line charts.
+   - Stores stock data in MongoDB for optimized performance and retrieval.
 
 3. **Database Integration**:
-   - Stores fetched data in SQLite to minimize API calls and optimize performance.
-   - Fetches stored data for display if available.
+   - Stores fetched metal prices and currency rates in SQLite.
+   - Stores stock data in MongoDB to minimize API calls and optimize performance.
