@@ -1,8 +1,22 @@
 import streamlit as st
+import os
+from dotenv import load_dotenv
 
-# Environment variable loaders to get the API keys and variables.
-metal_price_api_key = st.secrets['metal_price_api_key']
-usd_rate_api_key = st.secrets['usd_rate_api_key']
-troy_ounce = st.secrets['troy_ounce']
-stocks_data_api_key = st.secrets['stocks_data_api_key']
-mongodb_uri = st.secrets['mongodb_uri']
+load_dotenv()
+
+def get_secret(key):
+    
+    try:
+        if key in st.secrets:
+            return st.secrets[key]
+    except (FileNotFoundError, AttributeError):
+        pass
+    
+    return os.getenv(key)
+
+# --- Load Variables ---
+metal_price_api_key = get_secret('metal_price_api_key')
+usd_rate_api_key = get_secret('usd_rate_api_key')
+stocks_data_api_key = get_secret('stocks_data_api_key')
+troy_ounce = get_secret('troy_ounce')
+mongodb_uri = get_secret('mongodb_uri')

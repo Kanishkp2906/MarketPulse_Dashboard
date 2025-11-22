@@ -1,5 +1,5 @@
 import streamlit as st
-from stocks_list import bse_list
+from stocks_list import stock_list
 from get_dataframe import bse_dataframe, nse_dataframe, get_graph_dataframe
 
 class StocksPage:
@@ -17,7 +17,7 @@ class StocksPage:
         with self.col2:
             st.title("Stock Prices")
         self.subheader = st.caption("Top BSE and NSE Stocks just at one glance.")
-        self.symbols = bse_list
+        self.symbols = stock_list()
 
     # Function to display the stocks table.
     def stocks_table_display(self):
@@ -44,11 +44,13 @@ class StocksPage:
     def stocks_selectbox(self):
         st.write("")
         st.write("")
-        col1, col2 = st.columns([1,1])
 
         st.markdown("### BSE Stocks Volume History")
-        self.symbol = st.selectbox("Choose a stock", self.symbols)
-        return self.symbol
+        if self.symbols:
+            self.symbol = st.selectbox("Choose a stock", self.symbols)
+            return self.symbol
+        else:
+            st.error("Error in fetching the BSE stocks list.")
 
     def stocks_graph_display(self):
         st.write("")

@@ -1,3 +1,4 @@
+import concurrent.futures
 import pandas as pd
 from streamlit import cache_data
 from io import StringIO
@@ -26,20 +27,35 @@ def get_metal_tables(url):
         if dataframe:
             dataframe[0].index = dataframe[0].index + 1
             return dataframe[0].head(10)
+        else:
+            return pd.DataFrame
     except requests.exceptions.RequestException as e:
-        print(f"Error: {e}") 
+        print(f"Error: {e}")
+        return pd.DataFrame
 
 # Function to scrape the INR exchange rate.
 @cache_data(ttl='1d')
 def get_exchange_rate_table(url):
-    exchange_rate_tables = pd.read_html(url, storage_options={"User-Agent": "Mozilla/5.0"})
-    INR_table = exchange_rate_tables[0]
-    INR_table.index = INR_table.index + 1
-    return INR_table
+    try:
+        exchange_rate_tables = pd.read_html(url, storage_options={"User-Agent": "Mozilla/5.0"})
+        if exchange_rate_tables:
+            INR_table = exchange_rate_tables[0]
+            INR_table.index = INR_table.index + 1
+            return INR_table
+        else:
+            return pd.DataFrame
+    except Exception as e:
+        print(f"Error occured in fethcing exchange rate table:", str(e))
+        return pd.DataFrame
 
-# Variables for the dashboard.
-gold_table = get_metal_tables(gold_table_url)
-silver_table = get_metal_tables(silver_table_url)
-INR_table = get_exchange_rate_table(exchange_rate_table_url)
+# Variables for the dashboard called with threads.
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    future_gold_table = executor.submit(get_metal_tables,gold_table_url)
+    future_silver_table = executor.submit(get_metal_tables,silver_table_url)
+    future_INR_table = executor.submit(get_exchange_rate_table,exchange_rate_table_url)
+
+gold_table = future_gold_table.result()
+silver_table = future_silver_table.result()
+INR_table = future_INR_table.result()
 
 

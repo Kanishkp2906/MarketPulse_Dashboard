@@ -1,8 +1,7 @@
 import sqlite3
+import concurrent.futures
 from datetime import datetime
 from currencies import getprice
-import pandas as pd
-# from stocks_data import bse_dataframe, nse_dataframe
 
 # Make the database file.
 DB_FILE = "marketpulse.db"
@@ -40,8 +39,10 @@ def db_prices(date):
         conn.close()
         return existing_data
     else:
-        gold_price, silver_price = getprice.get_metal_price()
-        usd_rate = getprice.get_usd_rate()
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_metal_price = executor.submit(getprice.get_metal_price)
+            gold_price, silver_price = future_metal_price
+            usd_rate = executor.submit(getprice.get_usd_rate)
         cursor.execute("""
             INSERT INTO metal_prices (date, gold_price, silver_price, usd_rate)
             VALUES (?,?,?,?)

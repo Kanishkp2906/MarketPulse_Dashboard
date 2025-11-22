@@ -1,9 +1,12 @@
 import pandas as pd
 from stocks_data import historical_data, base_url, api_key
-from mongo_db import mongo_stocks_data
+from mongo_db import db_stocks_data
 
-db_data = mongo_stocks_data()
-bse_data, nse_data = db_data[0], db_data[1]
+try:
+    bse_data, nse_data = db_stocks_data[0], db_stocks_data[1]
+except Exception as e:
+    print(f"Error occured in mongo_db_data: {e}")
+    bse_data, nse_data = None, None
 
 # Function to normalize the json response and return a edited table.
 def get_dataframe(stock_data):

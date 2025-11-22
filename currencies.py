@@ -20,9 +20,11 @@ class GetPrices:
                 gold_price = (response.json()['rates']["INRXAU"])/float(troy_ounce)
                 silver_price = (response.json()['rates']['INRXAG'])/float(troy_ounce)
                 return gold_price, silver_price
-
+            else:
+                return None
         except requests.exceptions.RequestException as e:
             print("Error:",str(e))
+            return None
 
     # Function to fetch the USD rate.
     @staticmethod
@@ -36,10 +38,14 @@ class GetPrices:
         try:
             response = requests.get(url)
             response.raise_for_status
-            usd_rate = response.json()['rates']['INR']
-            return usd_rate
-        
-        except "Error" as e:
+            if response.status_code == 200:
+                usd_rate = response.json()['rates']['INR']
+                if usd_rate:
+                    return usd_rate
+                else:
+                    return None
+        except Exception as e:
             print("Error:", str(e))
+            return None
 
 getprice = GetPrices()

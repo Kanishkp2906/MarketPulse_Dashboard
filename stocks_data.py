@@ -6,6 +6,7 @@ api_key = stocks_data_api_key
 base_url = "https://indian-stock-exchange-api2.p.rapidapi.com"
 
 # Function to fetch the stock data.
+@cache_data(ttl='1d')
 def stocks_data(base_url, api_key, stock_ex):
 
     bse_url = f"{base_url}/{stock_ex}_most_active"
@@ -21,6 +22,8 @@ def stocks_data(base_url, api_key, stock_ex):
             data = response.json()
             if data:
                 return data
+            else:
+                return None
     except requests.exceptions.RequestException as e:
             print("Error:", str(e))
             return None
@@ -41,12 +44,14 @@ def historical_data(base_url, api_key, symbol):
     try:
         response = requests.get(url, headers=headers, params=querystring)
         response.raise_for_status()
-        if response.status_code == 200:
+        try:
             volume_data = response.json()['datasets'][3]['values']
             if volume_data:
                 return volume_data
-            else:
-                return None
+        except Exception as e:
+            print(f"Error in historical data:", str(e))
+
     except requests.exceptions.RequestException as e:
         print("Error:", str(e))
         return None
+
