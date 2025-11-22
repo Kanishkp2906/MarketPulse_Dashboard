@@ -1,6 +1,6 @@
 # MarketPulse Dashboard
 
-**Live Website**: [MarketPulse Dashboard](https://marketpulsedashboard-121125.streamlit.app)
+**Live Website**: [MarketPulse Dashboard](https://marketpulse-dashboard-mi94.onrender.com)
 
 ## Overview
 MarketPulse Dashboard is a Streamlit-based web application designed to provide real-time insights into Indian stock prices, gold and silver rates, and currency exchange rates. The app integrates multiple APIs and web scraping techniques to fetch and display data interactively.
@@ -22,7 +22,6 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
 - **Requests**: For API calls to fetch real-time data.
 - **Babel**: For formatting currency values.
 - **Web Scraping**: Using `pandas.read_html()` to extract gold, silver, and exchange rate tables.
-- **SQLite**: For storing fetched data to minimize API calls.
 - **MongoDB**: For storing and retrieving stock data.
 
 ## APIs Used
@@ -34,13 +33,12 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
 - **`main.py`**: Entry point of the application. Handles navigation between the dashboard and stock prices pages.
 - **`dashboard.py`**: Displays gold, silver, and currency rates along with interactive tables.
 - **`stocks_page.py`**: Displays BSE and NSE stock data and historical volume graphs.
-- **`database.py`**: Handles SQLite database operations for storing and retrieving metal prices and currency rates.
 - **`currencies.py`**: Fetches gold, silver, and USD rates using APIs.
 - **`stocks_data.py`**: Fetches stock data and historical volume data using APIs.
 - **`dashboard_tables.py`**: Scrapes gold, silver, and currency rate tables from websites.
 - **`stocks_list.py`**: Generates a list of stock symbols for user selection.
 - **`get_dataframe.py`**: Processes and normalizes stock data into Pandas DataFrames.
-- **`mongo_db.py`**: Handles MongoDB operations for storing and retrieving stock data.
+- **`mongo_db.py`**: Handles MongoDB operations for storing and retrieving stock data, metal prices and currency rates.
 - **`config.py`**: Loads environment variables for API keys and MongoDB URI.
 
 ## Installation
@@ -51,7 +49,7 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
    ```
 2. Install Dependencies
    ```bash
-   pip install -r pyproject.toml
+   pip install -r requirements.txt
    ```
 3. Set ip environment variables
    - Create a .env file in the project directory and add the following:
@@ -60,6 +58,7 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
    usd_rate_api_key=<your_usd_rate_api_key>
    stocks_data_api_key=<your_stocks_data_api_key>
    troy_ounce=31.1035
+   mongodb_uri=<your_mongo_db_uri>
    ```
 3. Run the application
    ```bash
@@ -77,5 +76,4 @@ MarketPulse Dashboard is a Streamlit-based web application designed to provide r
    - Stores stock data in MongoDB for optimized performance and retrieval.
 
 3. **Database Integration**:
-   - Stores fetched metal prices and currency rates in SQLite.
-   - Stores stock data in MongoDB to minimize API calls and optimize performance.
+   - Stores data in MongoDB to minimize API calls and optimize performance.
