@@ -15,6 +15,7 @@ def get_dataframe(stock_data):
         dataframe = pd.json_normalize(dataframe)
         dataframe.drop(columns=['bid','ask','low_circuit_limit','up_circuit_limit',
                                     'short_term_trend','long_term_trend','overall_rating'],inplace=True)
+        dataframe.index = dataframe.index + 1
         return dataframe
     else:
         return pd.DataFrame()

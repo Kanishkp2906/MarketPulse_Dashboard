@@ -26,7 +26,7 @@ class StocksPage:
 
         self.heading = st.markdown("### BSE Most Active Stocks")
         self.bse_table = bse_dataframe
-        self.bse_table.index = self.bse_table.index + 1
+        # self.bse_table.index = self.bse_table.index + 1
         st.dataframe(self.bse_table)
 
         st.write("")
@@ -34,7 +34,7 @@ class StocksPage:
 
         self.heading = st.markdown("### NSE Most Active Stocks")
         self.nse_table = nse_dataframe
-        self.nse_table.index = self.nse_table.index + 1
+        # self.nse_table.index = self.nse_table.index + 1
         st.dataframe(self.nse_table)
 
         st.write("")
