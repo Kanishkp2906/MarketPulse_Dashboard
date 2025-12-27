@@ -24,7 +24,6 @@ def get_db_connection():
         print(f"Error connecting to MongoDB: {e}")
         return None
 
-@cache_data(ttl='1d')
 def mongo_stocks_data():
     
     client = get_db_connection()
@@ -79,7 +78,6 @@ def mongo_stocks_data():
     else: 
         return 'Error connecting to Mongo DB.'
 
-@cache_data(ttl='1d')
 def mongo_metal_data():
 
     client = get_db_connection()
